@@ -13,7 +13,7 @@ namespace PUI
 	{
 		public override Vector2 Size
 		{
-			get => new Vector2(Texture.Width, Texture.Height) * Scale;
+			get => Texture.Size() * Scale;
 		}
 		public Color Color
 		{

@@ -162,6 +162,45 @@ namespace PUI
 		public event Action<object, EventArgs.EventArgs> OnFocus;
 		public event Action<object, EventArgs.EventArgs> OnFocusLost;
 
+		private void Click_Pass(OnClickEventArgs cea)
+		{
+			OnClick?.Invoke(this, cea);
+		}
+
+		private void Up_Pass(OnMouseUpEventArgs mue)
+		{
+			OnMouseUp?.Invoke(this, mue);
+			if (Parent != null)
+			{
+				if (Parent.Inside(MouseState.X, MouseState.Y) && !mue.Handled)
+				{
+					Parent.Up_Pass(mue);
+				}
+			}
+		}
+		private void Down_Pass(OnMouseDownEventArgs mde)
+		{
+			OnMouseDown?.Invoke(this, mde);
+			if (Parent != null)
+			{
+				if (Parent.Inside(MouseState.X, MouseState.Y) && !mde.Handled)
+				{
+					Parent.Down_Pass(mde);
+				}
+			}
+		}
+
+		private void Wheel_Pass(OnMouseWheelEventArgs mwe)
+		{
+			OnMouseWheel?.Invoke(this, mwe);
+			if (Parent != null)
+			{
+				if (Parent.Inside(MouseState.X, MouseState.Y) && !mwe.Handled)
+				{
+					Parent.Wheel_Pass(mwe);
+				}
+			}
+		}
 
 		public virtual void Update()
 		{
@@ -182,56 +221,17 @@ namespace PUI
 			{
 				if (_Down_Left)
 				{
-					OnMouseUpEventArgs mue = new OnMouseUpEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y) };
-					OnMouseUp?.Invoke(this, mue);
-					if (Parent != null)
-					{
-						if (Parent.Inside(MouseState.X, MouseState.Y) && !mue.Handled)
-						{
-							Parent.OnMouseUp?.Invoke(Parent, mue);
-						}
-					}
-					if (Inside(MouseState.X, MouseState.Y))
-					{
-						OnClickEventArgs cea = new OnClickEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y) };
-						OnClick?.Invoke(this, cea);
-						if (Parent != null)
-						{
-							if (Parent.Inside(MouseState.X, MouseState.Y) && !cea.Handled)
-							{
-								Parent.OnClick?.Invoke(Parent, cea);
-							}
-						}
-					}
+					Up_Pass(new OnMouseUpEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y) });
+					Click_Pass(new OnClickEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y) });
 				}
 			}
 			else if ((!ButtonPressed(MouseState.RightButton) && ButtonPressed(LastMouseState.RightButton)))
 			{
 				if (_Down_Right)
 				{
-					OnMouseUpEventArgs mue = new OnMouseUpEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y), Button = MouseButtons.Right };
 
-					OnMouseUp?.Invoke(this, mue);
-					if (Parent != null)
-					{
-						if (Parent.Inside(MouseState.X, MouseState.Y) && !mue.Handled)
-						{
-							Parent.OnMouseUp?.Invoke(Parent, mue);
-						}
-					}
-
-					if (Inside(MouseState.X, MouseState.Y))
-					{
-						OnClickEventArgs cea = new OnClickEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y), Button = MouseButtons.Right };
-						OnClick?.Invoke(this, cea);
-						if (Parent != null)
-						{
-							if (Parent.Inside(MouseState.X, MouseState.Y) && !cea.Handled)
-							{
-								Parent.OnClick?.Invoke(Parent, cea);
-							}
-						}
-					}
+					Up_Pass(new OnMouseUpEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y), Button = MouseButtons.Right });
+					Click_Pass(new OnClickEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y), Button = MouseButtons.Right });
 				}
 			}
 
@@ -297,39 +297,18 @@ namespace PUI
 				}
 				if (MouseState.ScrollWheelValue != LastMouseState.ScrollWheelValue)
 				{
-					OnMouseWheelEventArgs omw = new OnMouseWheelEventArgs() { Position = new Vector2(mouseX, mouseY), Value = MouseState.ScrollWheelValue - LastMouseState.ScrollWheelValue };
-					OnMouseWheel?.Invoke(this, omw);
-					if (Parent != null)
-					{
-						if (Parent.Inside(mouseX, mouseY) && !omw.Handled)
-						{
-							Parent.OnMouseWheel?.Invoke(Parent, omw);
-						}
-					}
+					OnMouseWheelEventArgs mwe = new OnMouseWheelEventArgs() { Position = new Vector2(mouseX, mouseY), Value = MouseState.ScrollWheelValue - LastMouseState.ScrollWheelValue };
+					Wheel_Pass(mwe);
 				}
 				if (ButtonPressed(MouseState.LeftButton) && !ButtonPressed(LastMouseState.LeftButton))
 				{
 					OnMouseDownEventArgs mde = new OnMouseDownEventArgs() { Position = new Vector2(mouseX, mouseY) };
-					OnMouseDown?.Invoke(this, mde);
-					if (Parent != null)
-					{
-						if (Parent.Inside(mouseX, mouseY) && !mde.Handled)
-						{
-							Parent.OnMouseDown?.Invoke(Parent, mde);
-						}
-					}
+					Down_Pass(mde);
 				}
 				if (ButtonPressed(MouseState.RightButton) && !ButtonPressed(LastMouseState.RightButton))
 				{
 					OnMouseDownEventArgs mde = new OnMouseDownEventArgs() { Position = new Vector2(mouseX, mouseY), Button = MouseButtons.Right };
-					OnMouseDown?.Invoke(this, mde);
-					if (Parent != null)
-					{
-						if (Parent.Inside(mouseX, mouseY) && !mde.Handled)
-						{
-							Parent.OnMouseDown?.Invoke(Parent, mde);
-						}
-					}
+					Down_Pass(mde);
 				}
 			}
 		}

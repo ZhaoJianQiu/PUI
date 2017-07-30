@@ -34,15 +34,25 @@ namespace PUI
 				Position = new Vector2(0, 40),
 				Size = new Vector2(150, 30)
 			};
-			ScrollBar ss = new ScrollBar();
-			ss.AnchorPosition = AnchorPosition.TopRight;
-			ss.Position = new Vector2(10, 30);
-			ss.Size = new Vector2(15, 170);
-			ss.Value = 100f;
+			CheckBox cb = new CheckBox("CheckBox")
+			{
+				Position = new Vector2(0, 80),
+				Size = new Vector2(150, 30),
+			};
+			ScrollBar ss = new ScrollBar()
+			{
+				AnchorPosition = AnchorPosition.TopRight,
+				Position = new Vector2(10, 30),
+				Size = new Vector2(15, 170),
+				Value = 100f
+			};
 			w.Controls.Add(tb);
+			w.Controls.Add(cb);
 			w.Controls.Add(ss);
 			PHooks.Hooks.InterfaceLayersSetup.After += InterfaceLayersSetup_After;
 		}
+
+
 
 		private static void InterfaceLayersSetup_After(object[] obj)
 		{
