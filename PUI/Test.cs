@@ -31,12 +31,12 @@ namespace PUI
 			};
 			TextBox tb = new TextBox()
 			{
-				Position = new Vector2(0, 40),
+				Position = new Vector2(10, 40),
 				Size = new Vector2(150, 30)
 			};
 			CheckBox cb = new CheckBox("CheckBox")
 			{
-				Position = new Vector2(0, 80),
+				Position = new Vector2(10, 80),
 				Size = new Vector2(150, 30),
 			};
 			ScrollBar ss = new ScrollBar()

@@ -29,10 +29,14 @@ namespace PUI
 			set;
 		}
 		protected MouseState LastMouseState = Mouse.GetState(), MouseState = Mouse.GetState();
-		public Container Parent
+		private Container _Parent = null;
+		public virtual Container Parent
 		{
-			get;
-			internal set;
+			get=>_Parent;
+			internal set
+			{
+				_Parent = value;
+			}
 		}
 		private bool _Focused;
 		public bool Focused

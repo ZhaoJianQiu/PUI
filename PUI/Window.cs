@@ -17,6 +17,14 @@ namespace PUI
 		private Container TitleBar = new Container();
 		private Image CloseButton = new Image(CloseButtonTexture);
 		private Label TitleLabel = new Label("");
+		public override Container Parent
+		{
+			get => base.Parent;
+			internal set
+			{
+
+			}
+		}
 		public string Title
 		{
 			get => TitleLabel.Text;
@@ -41,12 +49,32 @@ namespace PUI
 			CloseButton.Position = new Vector2(5, 5);
 			TitleBar.Controls.Add(TitleLabel);
 			TitleBar.Controls.Add(CloseButton);
+			TitleBar.OnMouseDown += TitleBar_OnMouseDown;
+			TitleBar.OnMouseUp += TitleBar_OnMouseUp;
 			Controls.Add(TitleBar);
+		}
+
+		private void TitleBar_OnMouseUp(object arg1, EventArgs.OnMouseUpEventArgs arg2)
+		{
+			_Window_Draging = false;
+		}
+
+		private bool _Window_Draging = false;
+		private Vector2 _TitleBar_Mouse_Off = Vector2.Zero;
+		private void TitleBar_OnMouseDown(object arg1, EventArgs.OnMouseDownEventArgs arg2)
+		{
+			_Window_Draging = true;
+			_TitleBar_Mouse_Off = new Vector2(MouseState.X, MouseState.Y) - DrawPosition;
 		}
 
 		public override void Update()
 		{
 			base.Update();
+			if (_Window_Draging)
+			{
+				Vector2 WindowDrawPos = new Vector2(MouseState.X, MouseState.Y) - _TitleBar_Mouse_Off;
+				Position = WindowDrawPos;
+			}
 		}
 		public override void Draw(SpriteBatch batch)
 		{

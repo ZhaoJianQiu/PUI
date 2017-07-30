@@ -49,7 +49,7 @@ namespace PUI
 			if (Visible)
 			{
 				base.Draw(batch);
-				DynamicSpriteFont sf = Main.fontItemStack;
+				DynamicSpriteFont sf = Main.fontMouseText;
 				Text = _Limit(sf, Text, Width - _Spacing * 2);
 				Vector2 size = ChatManager.GetStringSize(sf, Text, Vector2.One);
 				if (Text.Trim() == "")
