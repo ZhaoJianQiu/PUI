@@ -36,7 +36,6 @@ namespace PUI
 
 		private void CheckState_OnClick1(object arg1, EventArgs.OnClickEventArgs arg2)
 		{
-			Main.NewText("abcd");
 		}
 
 		private void Content_OnClick(object arg1, EventArgs.OnClickEventArgs arg2)
