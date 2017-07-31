@@ -56,7 +56,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +80,7 @@
     <Compile Include="EventArgs\OnMouseWheelEventArgs.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="ImageBox.cs" />
+    <Compile Include="ItemListView.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="ListView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -52,10 +52,10 @@ namespace PUI
 				DynamicSpriteFont sf = Main.fontMouseText;
 				Text = _Limit(sf, Text, Width - _Spacing * 2);
 				Vector2 size = ChatManager.GetStringSize(sf, Text, Vector2.One);
-				if (Text.Trim() == "")
-				{
-					size.Y = ChatManager.GetStringSize(sf, "a", Vector2.One).Y;//To get the default Height
-				}
+				/*if (Text.Trim() == "")
+				{*/
+					size.Y = ChatManager.GetStringSize(sf, "[i:3063]", Vector2.One).Y;//To get the default Height
+				//}
 				List<TextSnippet> snippets = GetDrawString();
 				ChatManager.DrawColorCodedStringWithShadow(batch, sf, snippets.ToArray(), AlignPos(size), 0f, Vector2.Zero, Vector2.One, out var hovered);
 			}

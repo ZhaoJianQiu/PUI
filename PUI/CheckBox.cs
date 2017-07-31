@@ -27,6 +27,7 @@ namespace PUI
 		public CheckBox(string Text)
 		{
 			this.Text = Text;
+			CheckState.Size = CheckBoxTexture.Size();
 
 			Content.OnClick += Content_OnClick;
 			CheckState.OnClick += CheckState_OnClick1;
@@ -71,11 +72,11 @@ namespace PUI
 			base.Draw(batch);
 			Content.Size = Size;
 			Content.Position = DrawPosition;
-			CheckState.Position = new Vector2(0, 0);
+			CheckState.Position = new Vector2(0, Height / 2 - CheckState.Height / 2);
 			CheckText.Position = new Vector2(CheckState.Width, 0);
 			CheckText.Size = new Vector2(Content.Width - CheckText.X, Content.Height);
 			Content.Draw(batch);
-			if(Checked)
+			if (Checked)
 				batch.Draw(CheckBoxMarkedTexture, CheckState.DrawPosition, Color.White);
 		}
 	}

@@ -72,7 +72,6 @@ namespace PUI
 		public ScrollBar()
 		{
 			Slider.Position = new Vector2(0, 0);
-			Slider.Size = new Vector2(15, 20);
 			Controls.Add(Slider);
 			OnMouseDown += ScrollBar_OnMouseDown;
 			OnMouseUp += ScrollBar_OnMouseUp;
@@ -143,6 +142,7 @@ namespace PUI
 				}
 			}
 			float off = (Height - Slider.Height) / 100 * Value;
+			Slider.Size = new Vector2(Width, Height / 7);
 			Slider.Position = new Vector2(0, off);
 		}
 		private void DrawBackground(SpriteBatch batch)

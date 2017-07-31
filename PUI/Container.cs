@@ -75,7 +75,10 @@ namespace PUI
 			public Control this[int index]
 			{
 				get => Value[index];
-				set => Value[index] = value;
+				set
+				{
+					return;
+				}
 			}
 
 			public int Count => Value.Count;

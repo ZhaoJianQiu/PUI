@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Terraria;
 #pragma warning disable CS0809
 
@@ -39,7 +38,7 @@ namespace PUI
 			Size = new Vector2(bound.Width, bound.Height);
 
 			TitleBar.Position = new Vector2(0, 0);
-			TitleBar.Size = new Vector2(Width, 36);
+			TitleBar.Size = new Vector2(Width, 30);
 
 			TitleLabel.Size = new Vector2(Width - 30, TitleBar.Height);
 			CloseButton.AnchorPosition = AnchorPosition.TopRight;

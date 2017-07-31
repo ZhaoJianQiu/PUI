@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Microsoft.Xna.Framework;
-using System.Windows.Forms;
 using Terraria.UI.Chat;
 
 namespace PUI
@@ -53,7 +52,9 @@ namespace PUI
 		{
 			var s = base.GetDrawString();
 			if (Focused)
+			{
 				s.Add(new TextSnippet(_Blink ? "" : "|", Color.Green));
+			}
 			return s;
 		}
 
@@ -78,6 +79,8 @@ namespace PUI
 				base.Draw(batch);//To draw the text
 				if (Focused)
 				{
+					Main.drawingPlayerChat = false;
+					Main.chatRelease = true;
 					Main.blockInput = true;
 					Terraria.GameInput.PlayerInput.WritingText = true;
 					Main.instance.HandleIME();

@@ -8,25 +8,18 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.UI;
 using PUI.EventArgs;
+using Terraria.GameInput;
 
 namespace PUI
 {
-	/// <summary>
-	/// have a simple test
-	/// it displayed a window that with some controls
-	/// close button(built-in)
-	/// title(built-in)
-	/// textbox(added)
-	/// scrollbar(useless, shows how it works)
-	/// </summary>
 	class Test
 	{
-		static Window w;
+		static Window window1,itemsWindow;
 		static Test()
 		{
-			w = new Window(new Rectangle(20, 180, 340, 340))
+			window1 = new Window(new Rectangle(20, 180, 280, 340))
 			{
-				Title = "Title",
+				Title = "Demo Window",
 				BlockMouse = true,
 			};
 			TextBox tb = new TextBox()
@@ -39,11 +32,38 @@ namespace PUI
 				Position = new Vector2(10, 80),
 				Size = new Vector2(150, 30),
 			};
+			ItemListView ilv = new ItemListView()
+			{
+				Position = new Vector2(10, 120),
+				Size = new Vector2(260, 200),
+			};
+			ilv.Add(new Label("Fuck"));
+			ilv.Add(new Label("Your"));
+			ilv.Add(new Label("Mother"));
+			ilv.Add(new Label("Fuck"));
+			ilv.Add(new Label("Your"));
+			ilv.Add(new Label("Mother"));
+			ilv.Add(new Label("Fuck"));
+			ilv.Add(new Label("Your"));
+			ilv.Add(new Label("Mother"));
+			ilv.Add(new Label("Fuck"));
+			ilv.Add(new Label("Your"));
+			ilv.Add(new Label("Mother"));
+			window1.Controls.Add(tb);
+			window1.Controls.Add(cb);
+			window1.Controls.Add(ilv);
+
+
+			itemsWindow = new Window(new Rectangle(300, 180, 240, 240))
+			{
+				Title = "Items Window",
+				BlockMouse = true,
+			};
 			ImageBox ib = new ImageBox()
 			{
 				ToolTip = true,
-				Position = new Vector2(10, 120),
-				Size = new Vector2(260, 200),
+				Position = new Vector2(10, 30),
+				Size = new Vector2(215, 200),
 				Column = 6,
 			};
 			for (int i = 1; i < Main.maxItemTypes; i++)
@@ -52,16 +72,22 @@ namespace PUI
 				t.SetDefaults(i);
 				ib.Items.Add(new ImageBox.ImageBoxItem(Main.itemTexture[i], t.HoverName));
 			}
-			w.Controls.Add(tb);
-			w.Controls.Add(cb);
-			w.Controls.Add(ib);
+			itemsWindow.Controls.Add(ib);
+
 			PHooks.Hooks.InterfaceLayersSetup.After += InterfaceLayersSetup_After;
 			PHooks.Hooks.Update.After += Update_After;
+			PHooks.Hooks.Update.Pre += Update_Pre;
+		}
+
+		private static bool Update_Pre(object[] arg)
+		{
+			return true;
 		}
 
 		private static void Update_After(object[] obj)
 		{
-			w.Update();
+			window1.Update();
+			itemsWindow.Update();
 		}
 
 		private static void InterfaceLayersSetup_After(object[] obj)
@@ -73,7 +99,8 @@ namespace PUI
 					"Test: UI",
 					delegate
 					{
-						w.Draw(Main.spriteBatch);
+						window1.Draw(Main.spriteBatch);
+						itemsWindow.Draw(Main.spriteBatch);
 						return true;
 					},
 					InterfaceScaleType.UI)

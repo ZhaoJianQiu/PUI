@@ -112,7 +112,9 @@ namespace PUI
 				int X = (int)Math.Floor((double)Width / elementSize);
 				int Y = (int)Math.Floor((double)Height / elementSize);
 				int items_Per_Page = X * Y;
-				int begin = (int)Math.Floor(ScrollBar.Value / 100f * (Items.Count - items_Per_Page));
+				int begin = 0;
+				if(Items.Count > items_Per_Page)
+					begin = (int)Math.Floor(ScrollBar.Value / 100f * (Items.Count - items_Per_Page));
 				int j = 0;
 				for (int i = begin; i < Items.Count; i++)
 				{

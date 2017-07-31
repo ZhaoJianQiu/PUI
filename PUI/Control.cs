@@ -9,6 +9,7 @@ using Terraria;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using PUI.EventArgs;
+using Terraria.GameInput;
 
 namespace PUI
 {
