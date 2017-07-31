@@ -63,18 +63,18 @@ namespace PUI
 		}
 		public override void Update()
 		{
-			Content.Update();
 			base.Update();
+			Content.Update();
 		}
 		public override void Draw(SpriteBatch batch)
 		{
+			base.Draw(batch);
 			Content.Size = Size;
 			Content.Position = DrawPosition;
 			CheckState.Position = new Vector2(0, 0);
 			CheckText.Position = new Vector2(CheckState.Width, 0);
 			CheckText.Size = new Vector2(Content.Width - CheckText.X, Content.Height);
 			Content.Draw(batch);
-			base.Draw(batch);
 			if(Checked)
 				batch.Draw(CheckBoxMarkedTexture, CheckState.DrawPosition, Color.White);
 		}

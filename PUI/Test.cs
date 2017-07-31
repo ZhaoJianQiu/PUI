@@ -24,7 +24,7 @@ namespace PUI
 		static Window w;
 		static Test()
 		{
-			w = new Window(new Rectangle(200, 300, 200, 200))
+			w = new Window(new Rectangle(20, 180, 340, 340))
 			{
 				Title = "Title",
 				BlockMouse = true,
@@ -32,38 +32,46 @@ namespace PUI
 			TextBox tb = new TextBox()
 			{
 				Position = new Vector2(10, 40),
-				Size = new Vector2(150, 30)
+				Size = new Vector2(200, 30)
 			};
 			CheckBox cb = new CheckBox("CheckBox")
 			{
 				Position = new Vector2(10, 80),
 				Size = new Vector2(150, 30),
 			};
-			ScrollBar ss = new ScrollBar()
+			ImageBox ib = new ImageBox()
 			{
-				AnchorPosition = AnchorPosition.TopRight,
-				Position = new Vector2(10, 30),
-				Size = new Vector2(15, 170),
-				Value = 100f
+				Position = new Vector2(10, 120),
+				Size = new Vector2(260, 200),
+				Column = 6,
 			};
+			for (int i = 1; i < Main.maxItemTypes; i++)
+			{
+				Item t = new Item();
+				t.SetDefaults(i);
+				ib.Items.Add(new ImageBox.ImageBoxItem(Main.itemTexture[i], t.HoverName));
+			}
 			w.Controls.Add(tb);
 			w.Controls.Add(cb);
-			w.Controls.Add(ss);
+			w.Controls.Add(ib);
 			PHooks.Hooks.InterfaceLayersSetup.After += InterfaceLayersSetup_After;
+			PHooks.Hooks.Update.After += Update_After;
 		}
 
-
+		private static void Update_After(object[] obj)
+		{
+			w.Update();
+		}
 
 		private static void InterfaceLayersSetup_After(object[] obj)
 		{
 			int MouseTextIndex = Main.instance._gameInterfaceLayers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			if (MouseTextIndex != -1)
 			{
-				Main.instance._gameInterfaceLayers.Insert(MouseTextIndex, new LegacyGameInterfaceLayer(
+				Main.instance._gameInterfaceLayers.Insert(MouseTextIndex+1, new LegacyGameInterfaceLayer(
 					"Test: UI",
 					delegate
 					{
-						w.Update();
 						w.Draw(Main.spriteBatch);
 						return true;
 					},

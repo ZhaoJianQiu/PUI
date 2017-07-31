@@ -80,6 +80,7 @@
     <Compile Include="EventArgs\OnMouseUpEventArgs.cs" />
     <Compile Include="EventArgs\OnMouseWheelEventArgs.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="ImageBox.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrollBar.cs" />

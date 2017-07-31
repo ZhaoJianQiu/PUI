@@ -72,7 +72,7 @@ namespace PUI
 		public ScrollBar()
 		{
 			Slider.Position = new Vector2(0, 0);
-			Slider.Size = new Vector2(15, 30);
+			Slider.Size = new Vector2(15, 20);
 			Controls.Add(Slider);
 			OnMouseDown += ScrollBar_OnMouseDown;
 			OnMouseUp += ScrollBar_OnMouseUp;

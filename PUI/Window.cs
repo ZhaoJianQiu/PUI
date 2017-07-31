@@ -7,16 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Terraria;
+#pragma warning disable CS0809
 
 namespace PUI
 {
 	public class Window : Container
 	{
 		public static Texture2D CloseButtonTexture = Main.instance.OurLoad<Texture2D>("Qiu/UI/CloseButton");
-		public static Color WindowBackground;
+		public static Color WindowBackground = new Color(33, 15, 91, 255) * 0.685f;
 		private Container TitleBar = new Container();
 		private Image CloseButton = new Image(CloseButtonTexture);
 		private Label TitleLabel = new Label("");
+		[Obsolete("Window can't be added into another container", true)]
 		public override Container Parent
 		{
 			get => base.Parent;
