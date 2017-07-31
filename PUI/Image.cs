@@ -11,16 +11,7 @@ namespace PUI
 {
 	public class Image : Control
 	{
-		public override Vector2 Size
-		{
-			get => Texture.Size() * Scale;
-		}
 		public Color Color
-		{
-			get;
-			set;
-		}
-		public Vector2 Scale
 		{
 			get;
 			set;
@@ -44,7 +35,6 @@ namespace PUI
 		public Image(Texture2D texture)
 		{
 			Color = Color.White;
-			Scale = new Vector2(1f, 1f);
 			SpriteEffects = SpriteEffects.None;
 			Texture = texture;
 			DrawingRectangle = new Rectangle(0, 0, Texture.Width, Texture.Height);
@@ -52,7 +42,7 @@ namespace PUI
 		public override void Draw(SpriteBatch batch)
 		{
 			base.Draw(batch);
-			batch.Draw(Texture, DrawPosition, DrawingRectangle, Color, 0, Vector2.Zero, Scale, SpriteEffects, 0f);
+			batch.Draw(Texture, DrawPosition, DrawingRectangle, Color, 0, Vector2.Zero, (Size / Texture.Size()) * (Size / DrawingRectangle.Size()), SpriteEffects, 0f);
 		}
 	}
 }

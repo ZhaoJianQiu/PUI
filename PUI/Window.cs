@@ -33,11 +33,6 @@ namespace PUI
 			set => TitleLabel.Text = value;
 		}
 
-		public Window()
-		{
-
-		}
-
 		public Window(Rectangle bound)
 		{
 			Position = new Vector2(bound.X, bound.Y);
@@ -49,6 +44,7 @@ namespace PUI
 			TitleLabel.Size = new Vector2(Width - 30, TitleBar.Height);
 			CloseButton.AnchorPosition = AnchorPosition.TopRight;
 			CloseButton.Position = new Vector2(5, 5);
+			CloseButton.Size = new Vector2(16, 15);
 			TitleBar.Controls.Add(TitleLabel);
 			TitleBar.Controls.Add(CloseButton);
 			TitleBar.OnMouseDown += TitleBar_OnMouseDown;
