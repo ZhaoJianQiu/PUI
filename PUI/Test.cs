@@ -41,6 +41,7 @@ namespace PUI
 			};
 			ImageBox ib = new ImageBox()
 			{
+				ToolTip = true,
 				Position = new Vector2(10, 120),
 				Size = new Vector2(260, 200),
 				Column = 6,

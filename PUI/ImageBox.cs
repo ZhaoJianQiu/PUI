@@ -99,7 +99,7 @@ namespace PUI
 
 		private void Content_OnMouseWheel(object arg1, EventArgs.OnMouseWheelEventArgs arg2)
 		{
-			ScrollBar.Value += arg2.Value / 120;
+			ScrollBar.Value -= arg2.Value / 120;
 		}
 
 		public override void Update()
