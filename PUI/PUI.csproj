@@ -74,6 +74,7 @@
     <Compile Include="EventArgs\MouseEvent.cs" />
     <Compile Include="EventArgs\OnClickEventArgs.cs" />
     <Compile Include="EventArgs\OnHoverEventArgs.cs" />
+    <Compile Include="EventArgs\OnImageBoxItemClick.cs" />
     <Compile Include="EventArgs\OnMouseDownEventArgs.cs" />
     <Compile Include="EventArgs\OnMouseEnterEventArgs.cs" />
     <Compile Include="EventArgs\OnMouseLeaveEventArgs.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Image.cs" />
     <Compile Include="ImageBox.cs" />
     <Compile Include="Label.cs" />
+    <Compile Include="ListView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrollBar.cs" />
     <Compile Include="Test.cs" />

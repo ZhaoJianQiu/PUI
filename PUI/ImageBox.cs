@@ -62,7 +62,6 @@ namespace PUI
 				base.Draw(batch);
 				DrawBackground(batch);
 				DrawContent(batch);
-				//ChatManager.DrawColorCodedStringWithShadow(batch, Main.fontMouseText, ToolTip, new Vector2(MouseState.X, MouseState.Y) + new Vector2(20, 20), Color.White, 0f, Vector2.Zero, Vector2.One);
 			}
 		}
 		private int _Column = 5;
@@ -83,11 +82,6 @@ namespace PUI
 			get;
 			private set;
 		}
-		public bool Selectable
-		{
-			get;
-			set;
-		}
 		public bool ToolTip
 		{
 			get;
@@ -100,6 +94,12 @@ namespace PUI
 			ScrollBar.AnchorPosition = AnchorPosition.TopRight;
 			ScrollBar.Speed = 0.05f;
 			Content.Controls.Add(ScrollBar);
+			Content.OnMouseWheel += Content_OnMouseWheel;
+		}
+
+		private void Content_OnMouseWheel(object arg1, EventArgs.OnMouseWheelEventArgs arg2)
+		{
+			ScrollBar.Value += 1f;
 		}
 
 		public override void Update()
@@ -173,7 +173,7 @@ namespace PUI
 			DrawBackground(batch);
 			Content.Draw(batch);
 			DrawElements(batch);
-			if (_Item_Hovered)
+			if (ToolTip && _Item_Hovered)
 				ChatManager.DrawColorCodedStringWithShadow(batch, Main.fontMouseText, _Hover_Text, new Vector2(MouseState.X, MouseState.Y) + new Vector2(20, 20), Color.White, 0f, Vector2.Zero, Vector2.One);
 		}
 	}
