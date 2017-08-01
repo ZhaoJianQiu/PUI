@@ -13,14 +13,20 @@ namespace PUI
 {
 	public class Label : Control
 	{
-		protected const float _Spacing = 3f;
-		private TextAlign _TextAlign = TextAlign.Left;
-		public TextAlign TextAlign
+		protected DynamicSpriteFont SpriteFont = Main.fontMouseText;
+		protected float _PaddingLeft = 4f, _PaddingRight = 4f;
+		protected bool MultiLine
 		{
-			get => _TextAlign;
-			set => _TextAlign = value;
+			get;
+			set;
 		}
 		private string _Text = "";
+		private float _TextVerticalPadding = 5f;
+		public float TextVerticalPadding
+		{
+			get => _TextVerticalPadding;
+			set => _TextVerticalPadding = value;
+		}
 		public string Text
 		{
 			get => _Text;
@@ -40,9 +46,61 @@ namespace PUI
 		{
 
 		}
-		protected virtual List<TextSnippet> GetDrawString()
+		protected virtual List<string> _Line_Split(string str, float maxWidth)
 		{
-			return ChatManager.ParseMessage(Text, TextColor);
+			if (ChatManager.GetStringSize(SpriteFont, str, Vector2.One).X <= maxWidth)
+				return new List<string>() { str };
+			for (int i = str.Length; i > 0; i--)
+			{
+				string s = str.Substring(0, i);
+				if (ChatManager.GetStringSize(SpriteFont, s, Vector2.One).X <= maxWidth)
+				{
+					List<string> r = new List<string>();
+					r.Add(s);
+					r.AddRange(_Line_Split(str.Substring(i), maxWidth));
+					return r;
+				}
+			}
+			return new List<string>() { str };
+		}
+		protected virtual List<List<TextSnippet>> GetDrawStringMultiLine(string str)
+		{
+			string[] clipedString = str.Split(new string[] { "\n" }, StringSplitOptions.None);
+			List<string> txt = new List<string>();
+			foreach (var s in clipedString)
+			{
+				var e = _Line_Split(s, Width - (_PaddingLeft + _PaddingRight));
+				txt.AddRange(e);
+			}
+			List<List<TextSnippet>> r = new List<List<TextSnippet>>();
+			for (int i = 0; i < txt.Count; i++)
+			{
+				r.Add(ChatManager.ParseMessage(txt[i], TextColor));
+			}
+			return r;
+		}
+		protected virtual void DrawString(SpriteBatch batch, List<List<TextSnippet>> text)
+		{
+			float height_Text = ChatManager.GetStringSize(SpriteFont, "[i:3063]", Vector2.One).Y;
+			float height_Per_Line = height_Text + TextVerticalPadding * 2;
+			if (MultiLine)
+			{
+				for (int i = 0; i < text.Count; i++)
+				{
+					var line = text[i];
+					var dPos = DrawPosition;
+					dPos.Y += height_Per_Line * i;
+					dPos.Y += height_Per_Line / 2 - height_Text / 2;
+					dPos.X += _PaddingLeft;
+					if (dPos.Y + height_Per_Line <= DrawPosition.Y + Height)
+						ChatManager.DrawColorCodedStringWithShadow(batch, SpriteFont, line.ToArray(), dPos, 0f, Vector2.Zero, Vector2.One, out var hovered);
+				}
+			}
+			else
+			{
+				Vector2 dPos = DrawPosition + new Vector2(_PaddingLeft, Height / 2 - height_Per_Line / 2);
+				ChatManager.DrawColorCodedStringWithShadow(batch, SpriteFont, text[0].ToArray(), dPos, 0f, Vector2.Zero, Vector2.One, out var hovered);
+			}
 		}
 		public override void Draw(SpriteBatch batch)
 		{
@@ -50,38 +108,11 @@ namespace PUI
 			{
 				base.Draw(batch);
 				DynamicSpriteFont sf = Main.fontMouseText;
-				Text = _Limit(sf, Text, Width - _Spacing * 2);
-				Vector2 size = ChatManager.GetStringSize(sf, Text, Vector2.One);
-				/*if (Text.Trim() == "")
-				{*/
-					size.Y = ChatManager.GetStringSize(sf, "[i:3063]", Vector2.One).Y;//To get the default Height
-				//}
-				List<TextSnippet> snippets = GetDrawString();
-				ChatManager.DrawColorCodedStringWithShadow(batch, sf, snippets.ToArray(), AlignPos(size), 0f, Vector2.Zero, Vector2.One, out var hovered);
+				List<List<TextSnippet>> lines = GetDrawStringMultiLine(Text);
+				if (lines.Count == 0)
+					lines.Add(new List<TextSnippet>() { new TextSnippet("") });
+				DrawString(batch, lines);
 			}
-		}
-		protected static string _Limit(DynamicSpriteFont dsf, string src, float maxWidth)
-		{
-			for (int i = 0; i <= src.Length; i++)
-			{
-				string s = src.Substring(0, i);
-				if (ChatManager.GetStringSize(dsf, s, Vector2.One).X > maxWidth)
-					return src.Substring(0, i - 1);
-			}
-			return src;
-		}
-		private Vector2 AlignPos(Vector2 fontSize)
-		{
-			switch (TextAlign)
-			{
-				case TextAlign.Left:
-					return new Vector2(DrawPosition.X + _Spacing, DrawPosition.Y + Height / 2 - fontSize.Y / 2);
-				case TextAlign.Right:
-					return new Vector2(DrawPosition.X + (Width - _Spacing - fontSize.X), DrawPosition.Y + (Height / 2 - fontSize.Y / 2));
-				case TextAlign.Center:
-					return new Vector2(DrawPosition.X + (Width / 2 - fontSize.X / 2), DrawPosition.Y + (Height / 2 - fontSize.Y / 2));
-			}
-			return DrawPosition;
 		}
 	}
 }

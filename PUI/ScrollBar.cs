@@ -54,6 +54,20 @@ namespace PUI
 			get => _Speed;
 			set => _Speed = value;
 		}
+		private float _Unit = 0.2f;
+		public float Unit
+		{
+			get => _Unit;
+			set
+			{
+				if (value > 1f)
+					_Unit = 1f;
+				else if (value < 0.1f)
+					_Unit = 0.1f;
+				else
+					_Unit = value;
+			}
+		}
 		private float _Value = 0f;
 		public float Value
 		{
@@ -142,7 +156,7 @@ namespace PUI
 				}
 			}
 			float off = (Height - Slider.Height) / 100 * Value;
-			Slider.Size = new Vector2(Width, Height / 7);
+			Slider.Size = new Vector2(Width, Height * Unit);
 			Slider.Position = new Vector2(0, off);
 		}
 		private void DrawBackground(SpriteBatch batch)

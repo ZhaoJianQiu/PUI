@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ID;
 #pragma warning disable CS0809
 
 namespace PUI
@@ -13,9 +14,18 @@ namespace PUI
 	public class Window : Container
 	{
 		public static Texture2D CloseButtonTexture = Main.instance.OurLoad<Texture2D>("Qiu/UI/CloseButton");
+		public static Texture2D MinimizeButtonTexture = Main.instance.OurLoad<Texture2D>("Qiu/UI/MinimizeButton");
+		//PanelBackground
 		public static Color WindowBackground = new Color(33, 15, 91, 255) * 0.685f;
 		private Container TitleBar = new Container();
 		private Image CloseButton = new Image(CloseButtonTexture);
+		private Image MiniMizeButton = new Image(MinimizeButtonTexture);
+		private Image IconImage = new Image(Main.itemTexture[ItemID.FragmentStardust]);
+		public Texture2D Icon
+		{
+			get => IconImage.Texture;
+			set => IconImage.Texture = value;
+		}
 		private Label TitleLabel = new Label("");
 		[Obsolete("Window can't be added into another container", true)]
 		public override Container Parent
@@ -25,6 +35,11 @@ namespace PUI
 			{
 
 			}
+		}
+		public bool Minimized
+		{
+			get;
+			set;
 		}
 		public string Title
 		{
@@ -40,15 +55,43 @@ namespace PUI
 			TitleBar.Position = new Vector2(0, 0);
 			TitleBar.Size = new Vector2(Width, 30);
 
-			TitleLabel.Size = new Vector2(Width - 30, TitleBar.Height);
+			IconImage.Size = new Vector2(20, 20);
+			IconImage.Position = new Vector2(5, 1);
+
+			TitleLabel.Size = new Vector2(Width - 55, TitleBar.Height);
+			TitleLabel.Position = new Vector2(25, 0);
 			CloseButton.AnchorPosition = AnchorPosition.TopRight;
 			CloseButton.Position = new Vector2(5, 5);
 			CloseButton.Size = new Vector2(16, 15);
+			CloseButton.OnClick += CloseButton_OnClick;
+
+			MiniMizeButton.AnchorPosition = AnchorPosition.TopRight;
+			MiniMizeButton.Position = new Vector2(24, 5);
+			MiniMizeButton.Size = new Vector2(16, 15);
+			MiniMizeButton.OnClick += MiniMizeButton_OnClick;
+
+			TitleBar.Controls.Add(IconImage);
 			TitleBar.Controls.Add(TitleLabel);
+			TitleBar.Controls.Add(MiniMizeButton);
 			TitleBar.Controls.Add(CloseButton);
 			TitleBar.OnMouseDown += TitleBar_OnMouseDown;
 			TitleBar.OnMouseUp += TitleBar_OnMouseUp;
 			Controls.Add(TitleBar);
+		}
+
+		public event Action<object, EventArgs.EventArgs> OnMinimizing;
+		private void MiniMizeButton_OnClick(object arg1, EventArgs.OnClickEventArgs arg2)
+		{
+			var e = new EventArgs.EventArgs();
+			OnMinimizing?.Invoke(this, e);
+			if (e.Handled) return;
+			Minimized = true;
+		}
+
+		public event Action<object, EventArgs.EventArgs> OnClosing;
+		private void CloseButton_OnClick(object arg1, EventArgs.OnClickEventArgs arg2)
+		{
+			OnClosing?.Invoke(this, new EventArgs.EventArgs());
 		}
 
 		private void TitleBar_OnMouseUp(object arg1, EventArgs.OnMouseUpEventArgs arg2)

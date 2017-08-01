@@ -42,7 +42,8 @@ namespace PUI
 		public override void Draw(SpriteBatch batch)
 		{
 			base.Draw(batch);
-			batch.Draw(Texture, DrawPosition, DrawingRectangle, Color, 0, Vector2.Zero, (Size / Texture.Size()) * (Size / DrawingRectangle.Size()), SpriteEffects, 0f);
+			//batch.Draw(Texture, DrawPosition, DrawingRectangle, Color, 0, Vector2.Zero, (Size / Texture.Size()) * (Size / DrawingRectangle.Size()), SpriteEffects, 0f);
+			batch.Draw(Texture, new Rectangle((int)DrawPosition.X, (int)DrawPosition.Y, (int)Width, (int)Height), DrawingRectangle, Color, 0f, Vector2.Zero, SpriteEffects, 0f);
 		}
 	}
 }

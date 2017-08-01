@@ -14,7 +14,8 @@ namespace PUI
 {
 	class Test
 	{
-		static Window window1,itemsWindow;
+		/*private static Window window1, itemsWindow;
+		private static WindowManager wm = new WindowManager();
 		static Test()
 		{
 			window1 = new Window(new Rectangle(20, 180, 280, 340))
@@ -22,36 +23,13 @@ namespace PUI
 				Title = "Demo Window",
 				BlockMouse = true,
 			};
-			TextBox tb = new TextBox()
+			TextBox tb = new TextBox(true)
 			{
 				Position = new Vector2(10, 40),
-				Size = new Vector2(200, 30)
+				Size = new Vector2(200, 90),
 			};
-			CheckBox cb = new CheckBox("CheckBox")
-			{
-				Position = new Vector2(10, 80),
-				Size = new Vector2(150, 30),
-			};
-			ItemListView ilv = new ItemListView()
-			{
-				Position = new Vector2(10, 120),
-				Size = new Vector2(260, 200),
-			};
-			ilv.Add(new Label("Fuck"));
-			ilv.Add(new Label("Your"));
-			ilv.Add(new Label("Mother"));
-			ilv.Add(new Label("Fuck"));
-			ilv.Add(new Label("Your"));
-			ilv.Add(new Label("Mother"));
-			ilv.Add(new Label("Fuck"));
-			ilv.Add(new Label("Your"));
-			ilv.Add(new Label("Mother"));
-			ilv.Add(new Label("Fuck"));
-			ilv.Add(new Label("Your"));
-			ilv.Add(new Label("Mother"));
+			tb.Text = "";
 			window1.Controls.Add(tb);
-			window1.Controls.Add(cb);
-			window1.Controls.Add(ilv);
 
 
 			itemsWindow = new Window(new Rectangle(300, 180, 240, 240))
@@ -74,10 +52,14 @@ namespace PUI
 			}
 			itemsWindow.Controls.Add(ib);
 
+			wm.Register(window1);
+			wm.Register(itemsWindow);
+
 			PHooks.Hooks.InterfaceLayersSetup.After += InterfaceLayersSetup_After;
 			PHooks.Hooks.Update.After += Update_After;
 			PHooks.Hooks.Update.Pre += Update_Pre;
 		}
+
 
 		private static bool Update_Pre(object[] arg)
 		{
@@ -86,8 +68,7 @@ namespace PUI
 
 		private static void Update_After(object[] obj)
 		{
-			window1.Update();
-			itemsWindow.Update();
+			wm.Update();
 		}
 
 		private static void InterfaceLayersSetup_After(object[] obj)
@@ -95,17 +76,16 @@ namespace PUI
 			int MouseTextIndex = Main.instance._gameInterfaceLayers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			if (MouseTextIndex != -1)
 			{
-				Main.instance._gameInterfaceLayers.Insert(MouseTextIndex+1, new LegacyGameInterfaceLayer(
+				Main.instance._gameInterfaceLayers.Insert(MouseTextIndex + 1, new LegacyGameInterfaceLayer(
 					"Test: UI",
 					delegate
 					{
-						window1.Draw(Main.spriteBatch);
-						itemsWindow.Draw(Main.spriteBatch);
+						wm.Draw(Main.spriteBatch);
 						return true;
 					},
 					InterfaceScaleType.UI)
 				);
 			}
-		}
+		}*/
 	}
 }

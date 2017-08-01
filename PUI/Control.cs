@@ -30,6 +30,7 @@ namespace PUI
 			set;
 		}
 		protected MouseState LastMouseState = Mouse.GetState(), MouseState = Mouse.GetState();
+		protected KeyboardState LastKeyboardState = Keyboard.GetState(), KeyboardState = Keyboard.GetState();
 		private Container _Parent = null;
 		public virtual Container Parent
 		{
@@ -211,6 +212,9 @@ namespace PUI
 		{
 			LastMouseState = MouseState;
 			MouseState = Mouse.GetState();
+
+			LastKeyboardState = KeyboardState;
+			KeyboardState = Keyboard.GetState();
 
 			if ((ButtonPressed(MouseState.LeftButton) && !ButtonPressed(LastMouseState.LeftButton)) || (ButtonPressed(MouseState.RightButton) && !ButtonPressed(LastMouseState.RightButton)))
 			{

@@ -83,12 +83,13 @@
     <Compile Include="ItemListView.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="ListView.cs" />
+    <Compile Include="PopupMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrollBar.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="TextAlign.cs" />
     <Compile Include="TextBox.cs" />
     <Compile Include="Window.cs" />
+    <Compile Include="WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Game\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Game.dll" />
