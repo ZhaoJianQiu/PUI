@@ -18,7 +18,7 @@ namespace PUI
 		private ScrollBar ScrollBar = new ScrollBar();
 		private bool _Hovered = false;
 		private int _Hovered_Index = 0;
-		private float _ScrollBarWidth = 10f;
+		private float _ScrollBarWidth = 15f;
 		public event Action<Label, OnClickEventArgs> OnItemClick;
 		public Label this[int k]
 		{
@@ -35,8 +35,8 @@ namespace PUI
 			ScrollBar.AnchorPosition = AnchorPosition.TopRight;
 			ScrollBar.Position = new Vector2(0, 0);
 			LabelContent.OnMouseWheel += LabelContent_OnMouseWheel;
-			Content.Controls.Add(LabelContent);
 			Content.Controls.Add(ScrollBar);
+			Content.Controls.Add(LabelContent);
 		}
 
 		private void LabelContent_OnMouseWheel(object arg1, OnMouseWheelEventArgs arg2)
@@ -56,6 +56,7 @@ namespace PUI
 			for (int i = begin; i < Items.Count; i++)
 			{
 				Items[i].Position = new Vector2(0, j * _ItemHeight);
+				Items[i].Size = new Vector2(LabelContent.Width - _ScrollBarWidth, _ItemHeight);
 				LabelContent.Controls.Add(Items[i]);
 				j++;
 				if (j == items_Per_Page) break;
@@ -82,8 +83,8 @@ namespace PUI
 					batch.Draw(Main.inventoryBack9Texture,
 						new Rectangle((int)LabelContent.Controls[_Hovered_Index].DrawPosition.X,
 						(int)LabelContent.Controls[_Hovered_Index].DrawPosition.Y,
-						(int)LabelContent.Controls[_Hovered_Index].Size.X,
-						(int)LabelContent.Controls[_Hovered_Index].Size.Y),
+						(int)LabelContent.Controls[_Hovered_Index].Width,
+						(int)LabelContent.Controls[_Hovered_Index].Height),
 						Color.White);
 				}
 			}
@@ -101,7 +102,6 @@ namespace PUI
 
 		public override void Add(Label item)
 		{
-			item.Size = new Vector2(Width - _ScrollBarWidth, _ItemHeight);
 			Items.Add(item);
 			item.OnClick += Item_OnClick;
 			item.OnHover += Item_OnHover;

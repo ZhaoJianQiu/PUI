@@ -15,6 +15,11 @@ namespace PUI
 {
 	public abstract class Control
 	{
+		public string ToolTip
+		{
+			get;
+			set;
+		}
 		private bool _Down_Left = false, _Down_Right = false;
 		private bool _LastInside = false;
 		private bool _Visible = true;
@@ -34,7 +39,7 @@ namespace PUI
 		private Container _Parent = null;
 		public virtual Container Parent
 		{
-			get=>_Parent;
+			get => _Parent;
 			internal set
 			{
 				_Parent = value;
@@ -279,7 +284,13 @@ namespace PUI
 		public virtual void Draw(SpriteBatch batch)
 		{
 			if (Inside(MouseState.X, MouseState.Y))
+			{
 				Main.LocalPlayer.mouseInterface = BlockMouse;
+				if (ToolTip != null)
+				{
+					Main.instance.MouseText(ToolTip);
+				}
+			}
 		}
 
 		private bool ButtonPressed(ButtonState bs)

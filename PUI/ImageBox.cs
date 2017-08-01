@@ -22,12 +22,6 @@ namespace PUI
 			}
 			public bool Hovered = false;
 			private float _Padding_Scale = 0.2f;
-			private string _ToolTip = "";
-			public string ToolTip
-			{
-				get => _ToolTip;
-				set => _ToolTip = value;
-			}
 			public ImageBoxItem(Texture2D Texture)
 			{
 				this.Texture = Texture;
@@ -72,20 +66,13 @@ namespace PUI
 		}
 		private Container Content = new Container();
 		private ScrollBar ScrollBar = new ScrollBar();
-
-		private bool _Item_Hovered = false;
-		private string _Hover_Text = "";
+		
 		private float _ScrollBar_Width = 15f, _Spacing = 1f;
 		private List<ImageBoxItem> DrawingItems = new List<ImageBoxItem>();
 		public List<ImageBoxItem> Items
 		{
 			get;
 			private set;
-		}
-		public bool ToolTip
-		{
-			get;
-			set;
 		}
 
 		public ImageBox()
@@ -127,7 +114,6 @@ namespace PUI
 			{
 				DrawingItems[i].Update();
 			}
-			_Item_Hovered = false;
 			Content.Update();
 		}
 		private void DrawBackground(SpriteBatch batch)
@@ -155,11 +141,6 @@ namespace PUI
 					DrawingItems[i].Position = dPos;
 					DrawingItems[i].Size = new Vector2(elementSize, elementSize);
 					DrawingItems[i].Draw(batch);
-					if (DrawingItems[i].Hovered)
-					{
-						_Hover_Text = DrawingItems[i].ToolTip;
-						_Item_Hovered = true;
-					}
 				}
 			}
 		}
@@ -175,8 +156,8 @@ namespace PUI
 			DrawBackground(batch);
 			Content.Draw(batch);
 			DrawElements(batch);
-			if (ToolTip && _Item_Hovered)
-				ChatManager.DrawColorCodedStringWithShadow(batch, Main.fontMouseText, _Hover_Text, new Vector2(MouseState.X, MouseState.Y) + new Vector2(20, 20), Color.White, 0f, Vector2.Zero, Vector2.One);
+			/*if (ToolTip && _Item_Hovered)
+				ChatManager.DrawColorCodedStringWithShadow(batch, Main.fontMouseText, _Hover_Text, new Vector2(MouseState.X, MouseState.Y) + new Vector2(20, 20), Color.White, 0f, Vector2.Zero, Vector2.One);*/
 		}
 	}
 }
