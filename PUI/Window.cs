@@ -75,8 +75,8 @@ namespace PUI
 			MiniMizeButton.Size = new Vector2(16, 15);
 			MiniMizeButton.OnClick += MiniMizeButton_OnClick;
 
-			TitleBar.Controls.Add(IconImage);
 			TitleBar.Controls.Add(TitleLabel);
+			TitleBar.Controls.Add(IconImage);
 			TitleBar.Controls.Add(MiniMizeButton);
 			TitleBar.Controls.Add(CloseButton);
 			TitleBar.OnMouseDown += TitleBar_OnMouseDown;

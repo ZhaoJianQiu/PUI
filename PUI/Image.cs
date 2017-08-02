@@ -26,11 +26,15 @@ namespace PUI
 			get;
 			set;
 		}
-
+		private Texture2D _Texture = null;
 		public Texture2D Texture
 		{
-			get;
-			set;
+			get=>_Texture;
+			set
+			{
+				_Texture = value;
+				DrawingRectangle = new Rectangle(0, 0, Texture.Width, Texture.Height);
+			}
 		}
 		public Image(Texture2D texture)
 		{
@@ -42,7 +46,6 @@ namespace PUI
 		public override void Draw(SpriteBatch batch)
 		{
 			base.Draw(batch);
-			//batch.Draw(Texture, DrawPosition, DrawingRectangle, Color, 0, Vector2.Zero, (Size / Texture.Size()) * (Size / DrawingRectangle.Size()), SpriteEffects, 0f);
 			batch.Draw(Texture, new Rectangle((int)DrawPosition.X, (int)DrawPosition.Y, (int)Width, (int)Height), DrawingRectangle, Color, 0f, Vector2.Zero, SpriteEffects, 0f);
 		}
 	}
