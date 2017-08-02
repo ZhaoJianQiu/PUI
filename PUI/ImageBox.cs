@@ -66,7 +66,7 @@ namespace PUI
 		}
 		private Container Content = new Container();
 		private ScrollBar ScrollBar = new ScrollBar();
-		
+
 		private float _ScrollBar_Width = 15f, _Spacing = 1f;
 		private List<ImageBoxItem> DrawingItems = new List<ImageBoxItem>();
 		public List<ImageBoxItem> Items
@@ -99,9 +99,18 @@ namespace PUI
 				int X = (int)Math.Floor((double)Width / elementSize);
 				int Y = (int)Math.Floor((double)Height / elementSize);
 				int items_Per_Page = X * Y;
+				if (items_Per_Page == 0)
+					return;
 				int begin = 0;
-				if(Items.Count > items_Per_Page)
+				if (Items.Count > items_Per_Page)
+				{
+					ScrollBar.Unit = 1f - (float)(Items.Count - items_Per_Page) / Items.Count;
 					begin = (int)Math.Floor(ScrollBar.Value / 100f * (Items.Count - items_Per_Page));
+				}
+				else
+				{
+					ScrollBar.Unit = 1f;
+				}
 				int j = 0;
 				for (int i = begin; i < Items.Count; i++)
 				{

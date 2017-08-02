@@ -51,12 +51,19 @@ namespace PUI
 			int items_Per_Page = (int)Math.Floor((double)Height / _ItemHeight);
 			int begin = 0;
 			if (Items.Count > items_Per_Page)
+			{
+				ScrollBar.Unit = 1f - (float)(Items.Count - items_Per_Page) / Items.Count;
 				begin = (int)Math.Floor((ScrollBar.Value / 100f) * (Items.Count - items_Per_Page));
+			}
+			else
+			{
+				ScrollBar.Unit = 1f;
+			}
 			int j = 0;
 			for (int i = begin; i < Items.Count; i++)
 			{
 				Items[i].Position = new Vector2(0, j * _ItemHeight);
-				Items[i].Size = new Vector2(LabelContent.Width - _ScrollBarWidth, _ItemHeight);
+				Items[i].Size = new Vector2(LabelContent.Width, _ItemHeight);
 				LabelContent.Controls.Add(Items[i]);
 				j++;
 				if (j == items_Per_Page) break;

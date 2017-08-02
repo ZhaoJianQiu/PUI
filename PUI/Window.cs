@@ -13,6 +13,11 @@ namespace PUI
 {
 	public class Window : Container
 	{
+		public WindowManager WindowManager
+		{
+			get;
+			internal set;
+		}
 		public static Texture2D CloseButtonTexture = Main.instance.OurLoad<Texture2D>("Qiu/UI/CloseButton");
 		public static Texture2D MinimizeButtonTexture = Main.instance.OurLoad<Texture2D>("Qiu/UI/MinimizeButton");
 		//PanelBackground
