@@ -138,12 +138,14 @@ namespace PUI
 		}
 		public override void Update()
 		{
+			Main.NewText(Value.ToString());
 			base.Update();
 			if (_Slider_Draging)
 			{
 				Vector2 sliderDrawPos = new Vector2(MouseState.X, MouseState.Y) - _Slider_Mouse_Off;
 				float h = (sliderDrawPos - DrawPosition).Y;
-				Value = h / ((Height - Slider.Height) / 100);
+				float t = Height - Slider.Height;
+				Value = t == 0 ? 0f : h / (t / 100);
 			}
 			if (_ScrollBar_Down)
 			{
