@@ -49,8 +49,8 @@ namespace PUI
 			base.Draw(batch);
 			if (SubBar != null)
 			{
-				SubBar.Draw(batch);
 				SubBar.Position = new Vector2(X + (Width / 2 - SubBar.Width / 2), Y - SubBar.Height);
+				SubBar.Draw(batch);
 			}
 			var aC = ControlAt(MouseState.X, MouseState.Y);
 			if (aC != null)
