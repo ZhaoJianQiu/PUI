@@ -66,6 +66,7 @@ namespace PUI
 		}
 		public void Register(Window instance)
 		{
+			if (instance == null) return;
 			if (Windows.Count >= MaxWindows) return;
 			for (int i = 0; i < Windows.Count; i++)
 			{
@@ -77,15 +78,25 @@ namespace PUI
 				}
 			}
 			instance.WindowManager = this;
+			instance.OnClosing += Instance_OnClosing;
 			instance.OnMouseDown += Instance_OnMouseDown;
 			Windows.Add(instance);
 		}
 
+		private void Instance_OnClosing(object arg1, EventArgs.EventArgs arg2)
+		{
+			DisposeWindow((Window)arg1);
+		}
+
 		private void Instance_OnMouseDown(object arg1, OnMouseDownEventArgs arg2)
 		{
-			FocusWindow((Window)arg1);
+			//FocusWindow((Window)arg1);
+			if (WindowAt(new Vector2(Main.mouseX, Main.mouseY)) == arg1)
+			{
+				FocusWindow((Window)arg1);
+			}
 		}
-		
+
 
 		public bool DisposeWindow(Window instance)
 		{
