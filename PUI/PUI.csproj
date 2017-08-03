@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="AnchorPosition.cs" />
     <Compile Include="Bar.cs" />
+    <Compile Include="Button.cs" />
     <Compile Include="CheckBox.cs" />
     <Compile Include="Container.cs" />
     <Compile Include="Control.cs" />

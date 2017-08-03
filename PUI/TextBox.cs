@@ -51,7 +51,8 @@ namespace PUI
 
 		private void TextBox_OnEnterPress(object arg1, EventArgs.EventArgs arg2)
 		{
-			Text += "\n";
+			if (MultiLine)
+				Text += "\n";
 		}
 
 		private void TextBox_OnInput(object arg1, EventArgs.EventArgs arg2)
@@ -149,6 +150,7 @@ namespace PUI
 			else
 			{
 				Vector2 dPos = DrawPosition + new Vector2(_PaddingLeft, Height / 2 - height_Per_Line / 2);
+				Text = string.Concat(from s in text[0] select s.TextOriginal);//limit
 				if (Focused)
 					text[0].Add(new TextSnippet(_Blink ? "|" : "", Color.Black));
 

@@ -58,6 +58,11 @@ namespace PUI
 				DrawContent(batch);
 			}
 		}
+		public float ScrollValue
+		{
+			get => ScrollBar.Value;
+			set => ScrollBar.Value = value;
+		}
 		private int _Column = 5;
 		public int Column
 		{
@@ -87,7 +92,7 @@ namespace PUI
 
 		private void Content_OnMouseWheel(object arg1, EventArgs.OnMouseWheelEventArgs arg2)
 		{
-			ScrollBar.Value -= arg2.Value / 120;
+			ScrollBar.Value -= arg2.Value / 120 * 3;
 		}
 
 		public override void Update()
