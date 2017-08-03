@@ -138,7 +138,6 @@ namespace PUI
 		}
 		public override void Update()
 		{
-			Main.NewText(Value.ToString());
 			base.Update();
 			if (_Slider_Draging)
 			{
