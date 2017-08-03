@@ -92,6 +92,7 @@ namespace PUI
 
 		public override void Update()
 		{
+			_Item_Hovered = false;
 			base.Update();
 			{
 				DrawingItems.Clear();
