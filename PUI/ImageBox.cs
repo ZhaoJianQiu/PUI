@@ -66,7 +66,8 @@ namespace PUI
 		}
 		private Container Content = new Container();
 		private ScrollBar ScrollBar = new ScrollBar();
-
+		private string _Hover_Text = "";
+		private bool _Item_Hovered = false;
 		private float _ScrollBar_Width = 15f, _Spacing = 1f;
 		private List<ImageBoxItem> DrawingItems = new List<ImageBoxItem>();
 		public List<ImageBoxItem> Items
@@ -150,6 +151,11 @@ namespace PUI
 					DrawingItems[i].Position = dPos;
 					DrawingItems[i].Size = new Vector2(elementSize, elementSize);
 					DrawingItems[i].Draw(batch);
+					if (DrawingItems[i].Hovered)
+					{
+						_Hover_Text = DrawingItems[i].ToolTip;
+						_Item_Hovered = true;
+					}
 				}
 			}
 		}
@@ -165,8 +171,8 @@ namespace PUI
 			DrawBackground(batch);
 			Content.Draw(batch);
 			DrawElements(batch);
-			/*if (ToolTip && _Item_Hovered)
-				ChatManager.DrawColorCodedStringWithShadow(batch, Main.fontMouseText, _Hover_Text, new Vector2(MouseState.X, MouseState.Y) + new Vector2(20, 20), Color.White, 0f, Vector2.Zero, Vector2.One);*/
+			if (_Item_Hovered)
+				ChatManager.DrawColorCodedStringWithShadow(batch, Main.fontMouseText, _Hover_Text, new Vector2(MouseState.X, MouseState.Y) + new Vector2(20, 20), Color.White, 0f, Vector2.Zero, Vector2.One);
 		}
 	}
 }

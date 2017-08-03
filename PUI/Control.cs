@@ -286,10 +286,10 @@ namespace PUI
 			if (Inside(MouseState.X, MouseState.Y))
 			{
 				Main.LocalPlayer.mouseInterface = BlockMouse;
-				if (ToolTip != null)
+				/*if (ToolTip != null)
 				{
 					Main.instance.MouseText(ToolTip);
-				}
+				}*/
 			}
 		}
 
