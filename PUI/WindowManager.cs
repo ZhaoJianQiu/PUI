@@ -22,11 +22,14 @@ namespace PUI
 		}
 		public void Draw(SpriteBatch batch)
 		{
-			for (int i = 0; i < Windows.Count; i++)
+			lock (Windows)
 			{
-				var w = Windows[i];
-				if (w.Visible && !w.Minimized)
-					w.Draw(batch);
+				for (int i = 0; i < Windows.Count; i++)
+				{
+					var w = Windows[i];
+					if (w.Visible && !w.Minimized)
+						w.Draw(batch);
+				}
 			}
 		}
 		private bool _Down(ButtonState s)
@@ -35,52 +38,65 @@ namespace PUI
 		}
 		public void Update()
 		{
-			for (int i = 0; i < Windows.Count; i++)
+			lock (Windows)
 			{
-				var w = Windows[i];
-				if (!w.Minimized)
-					w.Update();
+				for (int i = 0; i < Windows.Count; i++)
+				{
+					var w = Windows[i];
+					if (!w.Minimized)
+						w.Update();
+				}
 			}
 		}
 		private Window WindowAt(Vector2 mouse)
 		{
-			for (int i = 0; i < Windows.Count; i++)
+			lock (Windows)
 			{
-				var W = Windows[Windows.Count - i - 1];
-				if (W.Inside(mouse.X, mouse.Y))
-					return W;
+				for (int i = 0; i < Windows.Count; i++)
+				{
+					var W = Windows[Windows.Count - i - 1];
+					if (W.Inside(mouse.X, mouse.Y))
+						return W;
+				}
 			}
 			return null;
 		}
 		private void FocusWindow(Window instance)//Move to last so that it won't be covered
 		{
-			if (Windows.Remove(instance))
+			lock (Windows)
 			{
-				for (int i = 0; i < Windows.Count; i++)
+				if (Windows.Remove(instance))
 				{
-					Windows[i].Focused = false;
+					for (int i = 0; i < Windows.Count; i++)
+					{
+						Windows[i].Focused = false;
+					}
+					instance.Focused = true;
+					Windows.Add(instance);
 				}
-				instance.Focused = true;
-				Windows.Add(instance);
 			}
 		}
 		public void Register(Window instance)
 		{
 			if (instance == null) return;
 			if (Windows.Count >= MaxWindows) return;
-			for (int i = 0; i < Windows.Count; i++)
+
+			lock (Windows)
 			{
-				var w = Windows[i];
-				var v = instance.DrawPosition + new Vector2(5);
-				if (w.Inside(v.X, v.Y))
+				for (int i = 0; i < Windows.Count; i++)
 				{
-					instance.Position = new Vector2(v.X + 15, v.Y + 15);
+					var w = Windows[i];
+					var v = instance.DrawPosition + new Vector2(5);
+					if (w.Inside(v.X, v.Y))
+					{
+						instance.Position = new Vector2(v.X + 15, v.Y + 15);
+					}
 				}
+				instance.WindowManager = this;
+				instance.OnClosing += Instance_OnClosing;
+				instance.OnMouseDown += Instance_OnMouseDown;
+				Windows.Add(instance);
 			}
-			instance.WindowManager = this;
-			instance.OnClosing += Instance_OnClosing;
-			instance.OnMouseDown += Instance_OnMouseDown;
-			Windows.Add(instance);
 		}
 
 		private void Instance_OnClosing(object arg1, EventArgs.EventArgs arg2)
@@ -101,11 +117,15 @@ namespace PUI
 		public bool DisposeWindow(Window instance)
 		{
 			if (instance == null) return false;
-			if (Windows.Remove(instance))
+
+			lock (Windows)
 			{
-				instance.WindowManager = null;
-				instance.OnMouseDown -= Instance_OnMouseDown;
-				return true;
+				if (Windows.Remove(instance))
+				{
+					instance.WindowManager = null;
+					instance.OnMouseDown -= Instance_OnMouseDown;
+					return true;
+				}
 			}
 			return false;
 		}

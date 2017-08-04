@@ -18,7 +18,7 @@ namespace PUI
 			set;
 		}
 		private float _Spacing = 8f;
-		private float VerticalPadding = 5f;
+		private float VerticalPadding = 10f;
 
 		private void Resize()
 		{
@@ -26,11 +26,11 @@ namespace PUI
 			float h = Height;
 			for (int i = 0; i < Controls.Count; i++)
 			{
-				Controls[i].Size = new Vector2(h, h - 2 * VerticalPadding);
+				float ty = h - 2 * VerticalPadding;
+				Controls[i].Size = new Vector2(h * (ty / h), ty);
 				Controls[i].Position = new Vector2(w, VerticalPadding);
-				w += _Spacing + Height;
+				w += _Spacing + Controls[i].Width;
 			}
-			//Size = new Vector2(w, Height);
 		}
 		public override void Update()
 		{
