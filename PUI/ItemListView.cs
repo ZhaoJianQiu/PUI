@@ -83,16 +83,23 @@ namespace PUI
 			{
 				Utils.DrawInvBG(batch, LabelContent.Controls[i].DrawPosition.X, LabelContent.Controls[i].DrawPosition.Y, LabelContent.Controls[i].Width, LabelContent.Controls[i].Height, Window.WindowBackground);
 			}
-			if(_Hovered)
+			if (_Hovered)
 			{
 				if (_Hovered_Index < LabelContent.Controls.Count)
 				{
-					batch.Draw(Main.inventoryBack9Texture,
-						new Rectangle((int)LabelContent.Controls[_Hovered_Index].DrawPosition.X,
-						(int)LabelContent.Controls[_Hovered_Index].DrawPosition.Y,
-						(int)LabelContent.Controls[_Hovered_Index].Width,
-						(int)LabelContent.Controls[_Hovered_Index].Height),
-						Color.White);
+					try//sometimes it causes crashing,i don't know why it did it
+					{
+						batch.Draw(Main.inventoryBack9Texture,
+							new Rectangle((int)LabelContent.Controls[_Hovered_Index].DrawPosition.X,
+							(int)LabelContent.Controls[_Hovered_Index].DrawPosition.Y,
+							(int)LabelContent.Controls[_Hovered_Index].Width,
+							(int)LabelContent.Controls[_Hovered_Index].Height),
+							Color.White);
+					}
+					catch (Exception e)
+					{
+						e.GetBaseException();
+					}
 				}
 			}
 		}

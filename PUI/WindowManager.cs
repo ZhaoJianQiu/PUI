@@ -78,11 +78,11 @@ namespace PUI
 		}
 		public void Register(Window instance)
 		{
-			if (instance == null) return;
-			if (Windows.Count >= MaxWindows) return;
-
 			lock (Windows)
 			{
+				if (instance == null) return;
+				if (Windows.Count >= MaxWindows) return;
+
 				for (int i = 0; i < Windows.Count; i++)
 				{
 					var w = Windows[i];

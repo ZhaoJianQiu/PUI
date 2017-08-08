@@ -12,10 +12,36 @@ namespace PUI
 {
 	public class Bar : Container
 	{
+		private Bar _SubBar = null;
 		public Bar SubBar
 		{
+			get => _SubBar;
+			set
+			{
+				if (value == null)
+				{
+					if (_SubBar != null)
+					{
+						_SubBar.ParentBar = null;
+						_SubBar = null;
+					}
+				}
+				else
+				{
+					if (_SubBar != null)
+					{
+						_SubBar.ParentBar = null;
+						_SubBar = null;
+					}
+					_SubBar = value;
+					_SubBar.ParentBar = this;
+				}
+			}
+		}
+		public Bar ParentBar
+		{
 			get;
-			set;
+			private set;
 		}
 		private float _Spacing = 8f;
 		private float VerticalPadding = 10f;

@@ -54,20 +54,21 @@ namespace PUI
 			}
 			return this;
 		}
-		
+
 		public override void Draw(SpriteBatch batch)
 		{
 			base.Draw(batch);
 			if (Visible)
-				foreach (var c in Controls)
-					c.Draw(batch);
+				for (int i = 0; i < Controls.Count; i++)
+					Controls[i].Draw(batch);
 		}
 
 		public override void Update()
 		{
 			base.Update();
 			foreach (var c in Controls)
-				c.Update();
+				for (int i = 0; i < Controls.Count; i++)
+					Controls[i].Update();
 		}
 		public class ControlsList : IList<Control>
 		{

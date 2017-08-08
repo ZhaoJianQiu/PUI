@@ -221,7 +221,7 @@ namespace PUI
 			LastKeyboardState = KeyboardState;
 			KeyboardState = Keyboard.GetState();
 
-			if ((ButtonPressed(MouseState.LeftButton) && !ButtonPressed(LastMouseState.LeftButton)) || (ButtonPressed(MouseState.RightButton) && !ButtonPressed(LastMouseState.RightButton)))
+			if ((ButtonPressed(MouseState.LeftButton) && !ButtonPressed(LastMouseState.LeftButton)) || (ButtonPressed(MouseState.RightButton) && !ButtonPressed(LastMouseState.RightButton)) && Main.hasFocus)
 			{
 				var c = this;
 				while (c.Parent != null)
@@ -231,7 +231,7 @@ namespace PUI
 				if (c is Container)
 					UnfocuseAll((Container)c);
 			}
-			if ((!ButtonPressed(MouseState.LeftButton) && ButtonPressed(LastMouseState.LeftButton)))
+			if ((!ButtonPressed(MouseState.LeftButton) && ButtonPressed(LastMouseState.LeftButton)) && Main.hasFocus)
 			{
 				if (_Down_Left)
 				{
@@ -239,7 +239,7 @@ namespace PUI
 					Click_Pass(new OnClickEventArgs() { Position = new Vector2(MouseState.X, MouseState.Y) });
 				}
 			}
-			else if ((!ButtonPressed(MouseState.RightButton) && ButtonPressed(LastMouseState.RightButton)))
+			else if ((!ButtonPressed(MouseState.RightButton) && ButtonPressed(LastMouseState.RightButton)) && Main.hasFocus)
 			{
 				if (_Down_Right)
 				{
@@ -249,7 +249,7 @@ namespace PUI
 				}
 			}
 
-			if (!Inside(MouseState.X, MouseState.Y))
+			if (!Inside(MouseState.X, MouseState.Y) && Main.hasFocus)
 			{
 				//Leave
 				if (_LastInside)
@@ -300,7 +300,7 @@ namespace PUI
 			int mouseX = MouseState.X;
 			int mouseY = MouseState.Y;
 
-			if (Inside(mouseX, mouseY))
+			if (Inside(mouseX, mouseY) && Main.hasFocus)
 			{
 				OnHoverEventArgs mhe = new OnHoverEventArgs() { Position = new Vector2(mouseX, mouseY) };
 				OnHover?.Invoke(this, mhe);

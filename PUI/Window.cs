@@ -126,8 +126,8 @@ namespace PUI
 			if (Visible)
 			{
 				Utils.DrawInvBG(batch, DrawPosition.X, DrawPosition.Y, Width, Height, WindowBackground);//background, so before the child-controls
-				base.Draw(batch);
 			}
+			base.Draw(batch);
 		}
 	}
 }

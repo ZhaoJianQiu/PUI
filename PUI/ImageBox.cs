@@ -15,6 +15,11 @@ namespace PUI
 	{
 		public class ImageBoxItem : Control
 		{
+			public Rectangle DrawingRectangle
+			{
+				get;
+				set;
+			}
 			public Texture2D Texture
 			{
 				get;
@@ -36,6 +41,7 @@ namespace PUI
 			public ImageBoxItem(Texture2D Texture, string ToolTip) : this(Texture)
 			{
 				this.ToolTip = ToolTip;
+				DrawingRectangle = new Rectangle(0, 0, Texture.Width, Texture.Height);
 			}
 			public override void Update()
 			{
@@ -49,7 +55,7 @@ namespace PUI
 			private void DrawContent(SpriteBatch batch)
 			{
 				Vector2 scale = (Size / Texture.Size()) * (1 - (2 * _Padding_Scale));
-				batch.Draw(Texture, DrawPosition + new Vector2(Width, Height) * new Vector2(_Padding_Scale), null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+				batch.Draw(Texture, DrawPosition + new Vector2(Width, Height) * new Vector2(_Padding_Scale), DrawingRectangle, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 			}
 			public override void Draw(SpriteBatch batch)
 			{
