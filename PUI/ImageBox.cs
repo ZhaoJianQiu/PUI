@@ -54,8 +54,9 @@ namespace PUI
 			}
 			private void DrawContent(SpriteBatch batch)
 			{
-				Vector2 scale = (Size / Texture.Size()) * (1 - (2 * _Padding_Scale));
-				batch.Draw(Texture, DrawPosition + new Vector2(Width, Height) * new Vector2(_Padding_Scale), DrawingRectangle, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+				var o = new Vector2(Width, Height) * new Vector2(_Padding_Scale);
+				var d = DrawPosition + o;
+				batch.Draw(Texture, new Rectangle((int)d.X, (int)d.Y, (int)(Width - o.X * 2), (int)(Height - o.Y * 2)), DrawingRectangle, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
 			}
 			public override void Draw(SpriteBatch batch)
 			{
